@@ -1,0 +1,132 @@
+//===================================
+// NEW: placeholders for new credits strings
+//===================================
+
+#STARTSTRING("endnew_0x0", 0x0, 0xFFFFFFFF)
+#IMPORT("endnew_0x0")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1", 0x1, 0xFFFFFFFF)
+#IMPORT("endnew_0x1")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x2", 0x2, 0xFFFFFFFF)
+#IMPORT("endnew_0x2")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x3", 0x3, 0xFFFFFFFF)
+#IMPORT("endnew_0x3")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x4", 0x4, 0xFFFFFFFF)
+#IMPORT("endnew_0x4")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x5", 0x5, 0xFFFFFFFF)
+#IMPORT("endnew_0x5")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x6", 0x6, 0xFFFFFFFF)
+#IMPORT("endnew_0x6")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x7", 0x7, 0xFFFFFFFF)
+#IMPORT("endnew_0x7")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x8", 0x8, 0xFFFFFFFF)
+#IMPORT("endnew_0x8")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x9", 0x9, 0xFFFFFFFF)
+#IMPORT("endnew_0x9")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xA", 0xA, 0xFFFFFFFF)
+#IMPORT("endnew_0xA")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xB", 0xB, 0xFFFFFFFF)
+#IMPORT("endnew_0xB")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xC", 0xC, 0xFFFFFFFF)
+#IMPORT("endnew_0xC")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xD", 0xD, 0xFFFFFFFF)
+#IMPORT("endnew_0xD")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xE", 0xE, 0xFFFFFFFF)
+#IMPORT("endnew_0xE")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0xF", 0xF, 0xFFFFFFFF)
+#IMPORT("endnew_0xF")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x10", 0x10, 0xFFFFFFFF)
+#IMPORT("endnew_0x10")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x11", 0x11, 0xFFFFFFFF)
+#IMPORT("endnew_0x11")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x12", 0x12, 0xFFFFFFFF)
+#IMPORT("endnew_0x12")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x13", 0x13, 0xFFFFFFFF)
+#IMPORT("endnew_0x13")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x14", 0x14, 0xFFFFFFFF)
+#IMPORT("endnew_0x14")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x15", 0x15, 0xFFFFFFFF)
+#IMPORT("endnew_0x15")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x16", 0x16, 0xFFFFFFFF)
+#IMPORT("endnew_0x16")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x17", 0x17, 0xFFFFFFFF)
+#IMPORT("endnew_0x17")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x18", 0x18, 0xFFFFFFFF)
+#IMPORT("endnew_0x18")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x19", 0x19, 0xFFFFFFFF)
+#IMPORT("endnew_0x19")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1A", 0x1A, 0xFFFFFFFF)
+#IMPORT("endnew_0x1A")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1B", 0x1B, 0xFFFFFFFF)
+#IMPORT("endnew_0x1B")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1C", 0x1C, 0xFFFFFFFF)
+#IMPORT("endnew_0x1C")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1D", 0x1D, 0xFFFFFFFF)
+#IMPORT("endnew_0x1D")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1E", 0x1E, 0xFFFFFFFF)
+#IMPORT("endnew_0x1E")
+#ENDSTRING()
+
+#STARTSTRING("endnew_0x1F", 0x1F, 0xFFFFFFFF)
+#IMPORT("endnew_0x1F")
+#ENDSTRING()
+

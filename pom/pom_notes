@@ -1,0 +1,1216 @@
+
+ 
+** MAIN.EXE **
+  ** memory **
+    801260E0 = community state trigger??
+               0x13 = tip message event?
+    80129B1C = ? pointer when loading maps?
+    8012C0E4 = money
+    8012C624 = name buffer for naming screen
+    8013BAD0 = buffer for text box text?
+    801709D4 = SJIS decoding(?) table
+               loaded from STD2_7
+    801F56BC = item quantity table
+               (dengeki demo: 0x801EB300?)
+               (rerelease: 0x801BCC90)
+               - cards = 0x801F575C (item id 0xA0)
+    
+    ** gp area -- 8012B9AC+ **
+      8012B9D0 = ?
+      8012B9D4 = baseLoadSector
+                 base sector number when loading chunks from a file?
+                 e.g. for loading subchunks of a map from MAP.PAK,
+                 but probably used for other loading tasks too.
+                 apparently set to the base sectornum of the start of the
+                 target map's data in MAP.PAK (but disc-absolute) when loading
+                 e.g. 0x450 when leaving mococo village
+      8012B9FC = sector num of MAP.PAK on disc?
+      8012BD94 = 0x03E8($gp) = sjis encoding doc pointer?
+                               seems mundane, but the code for initializing
+                               each new line to be displayed in the text box
+                               specifically checks if this is zero for some
+                               reason and does extra initialization(?)
+                               if it is.
+                               it seems to be initialized during startup,
+                               and i can find nothing to suggest it would ever
+                               get set to zero, so what's the point...?
+      8012BD98 = 0x03EC($gp) = script index?? pointer??
+      8012BD9C = 0x03F0($gp) = ?
+      8012BDA0 = 0x03F4($gp) = script block base pointer?
+      8012BDA4 = 0x03F8($gp) = flag: nonzero if script active?
+      8012BDCE = 0x0422($gp) = timer to next text box char print
+      8012BDCF = 0x0423($gp) = reload value for 0x0422($gp) text timer
+      8012BDD4 = 0x0428($gp) = text box script pointer?
+      8012BDE4 = 0x0438($gp) = nonzero if choice prompt active??
+                               number of options?
+      8012BDE4 = 0x043C($gp) = index of currently selected choice prompt option?
+      8012BEA4 = count of mooms hit in casino minigame
+      8012BE54 = 0x04A8($gp) = selected X on naming screen
+      8012BE58 = 0x04AC($gp) = selected Y on naming screen
+      8012BE5C = 0x04B0($gp) = selected charset on naming screen
+                               - 0 = hiragana
+                               - 1 = katakana
+                               - 2 = english
+      8012BE60 = 0x04B4($gp) = max size of input (in bytes?) on naming screen?
+      8012BE64 = 0x04B8($gp) = size of input (in bytes?) on naming screen?
+      8012BE68 = 0x04BC($gp) = current naming screen state?
+      8012BE6C = 0x04C0($gp) = ?
+      8012BF28 = ?
+      8012BEF8 = 0x054C($gp) = current target index for text box char draw cmds?
+      8012BF18 = 0x056C($gp) = src for subfile-based ruxes?
+      8012BEFC = 0x0550($gp) = current target index for ? draw cmds?
+      8012BF44 = 0x0598($gp) = current script ptr offset
+      8012BF48 = 0x059C($gp) = ? offset from script start
+      8012BF4C = 0x05A0($gp) = string operation stack offset?
+                               when used, decremented by 2 and new string offset
+                               or operation code written to that location
+      8012BF50 = 0x05A4($gp) = ?
+      8012BF80 = 0x05D4($gp) = current text box char x-pos
+      8012BF84 = 0x05D8($gp) = current text box char y-pos
+      8012BFE8 = ?
+                 set to 3 during some stage of text printing?
+      8012BFF4 = 0x0648($gp) = buttons pressed?
+      8012BFF8 = something in player state struct?
+                 (there are obvious nearby values for velocity and buttons pressed)
+                 set to 1 when e.g. entering/leaving mococo village
+      8012BFFC = 0x0650($gp) = buttons triggered?
+      8012C004 = 0x0658($gp) = buttons triggered or repeated-triggered?
+      8012C040 = 0x0694($gp) = ?
+      8012C044 = 0x0698($gp) = ?
+      0x0768($gp) = offset to a script string that is accessed somehow?
+                    e.g. for pom house type (see op 3E)
+      8012C078 = 0x06CC($gp) = community disaster attack timer?
+                               counts up, attack ends when it's high enough
+      8012C0E4 = money
+      8012C150 = 0x07A4($gp) = state timer for area name display
+      8012C178 = 0x07CC($gp) = ? script condition checking?
+      8012C17C = 0x07D0($gp) = ? written with script op 39?
+      8012C190 = 0x07E4($gp) = set to triggered controller input
+                               on naming screen?
+      8012C1A0 = 0x07F4($gp) = set to pressed controller input
+                               on naming screen?
+      8012C1A4 = 0x07F8($gp) = set to activated controller input
+                               on naming screen?
+      8012C1E0 = 0x0834($gp) = (byte) nonzero if lulu movement disabled?
+                               due to e.g. summon animation
+                               see 0x80021F98
+      8012C200 = 0x0854($gp) = current/target area number?
+          not sure if each of these is a set of maps, or if there are
+          multiple "maps" stored on a single "sheet", etc.
+        - 0x01 = outside mococo village
+        - 0x04 = ki ni naru ki
+        - 0x10 = mococo village
+        - 0x11 = houses in mococo village
+      8012C208 = 0x085C($gp) = community disaster attack type?
+      8012C238 = 0x088C($gp) = copy of buttonsPressed?
+      8012C354 = 0x09A8($gp) = copy of buttonsTriggered?
+      8012C2B8 = 0x090C($gp) putaddr for some rendering commands?
+                 current display struct base?
+                 e.g. text box text
+                 see routine 800FA024
+      ???8012C2B8 = ???0x0930($gp) = naming screen magnifying glass render cmd dst?
+      8012C31C = 0x0970($gp) = lulu x
+                 (dengeki demo = 0x8011C064)
+                 (hyper demo = 0x8011C6C4)
+      8012C320 = 0x0974($gp) = lulu y
+      8012C324 = 0x0978($gp) = ? "submap"?
+                 seems to change within each "room"
+                 possibly is unique per room and not tied to current "map"?
+                 (dengeki demo = 0x8011C06C)
+      8012C37C = ? new submap number gets written here before loading?
+                 (dengeki demo = 0x8011C0C0)
+                 (hyper demo = 0x8011C720)
+                 (rerelease = 0x8012A760)
+      8012C3A4 = ?
+      8012C3D8 = 0x0A2C($gp) = next render cmd dst for "fixed char" print
+      8012C3F8 = next render cmd dst for "name screen" strings
+      8012C460 = 0x0AB4($gp) = string print pointer?
+      
+      80170F6E = countdown timer to days until next community disaster
+                 can occur?
+                 - decremented at 0x800218E4?
+                 looks like once this becomes zero, there are 50/50
+                 odds a disaster will occur the next time you enter
+                 the community
+                 (rerelease: 0x8015CA72)
+      
+      801BCC88 = pBAV for current map's music?
+                 (if "pBAV" identifier changed, will not play)
+                 to prevent map music from playing,
+                 set breakpoint on 0x80112828,
+                 then when it triggers, change 0x801BCC88 to anything else
+
+  ** routines **
+    8001F638 = sendDynamicSpritesToGpu
+    80021194 = ?
+               called once per frame throughout game?
+               e.g. at top of "main game" loop?
+    8003A734 = loadSomethingFromCd?
+               - a0 = dst
+               - a1 = size
+               - a2 = offset in sectors from start of baseLoadSector
+                      (8012B9D4, previously set up with e.g. setUpForMapPakLoad)
+    8003A8C0 = setUpForMapPakLoad?
+               prepares to load data from MAP.PAK for a particular map
+               - a0 = map index
+    8003C080 = printSjisString?
+    800434C8 = renderFixedChar?
+    800FAAE8 = decmpRuxAlt
+    800FB330 = doScriptUpdate?
+    800FDE9C = updateStdTextBoxMsg?
+    800FE508 = printTextBoxSubstr?
+    800FE790 = printTextBoxChar
+    800FFB5C = blankTextBoxBuffer
+    80100BE0 = ttyPrint?
+    80102BDC = send4bbTexToGpu?
+
+  ** data **
+    8001A208 = table of handler functions for script ops
+               0x84 entries?
+    8012335C = table of raw byte offsets in MAP.PAK for start of each map?
+      - 0x46 entries
+    80124FAC = hardcoded fixed-format string pointer table for system messages?
+               e.g. save/load screen, naming screen...
+    8012507C = SJIS conversion table
+               NOT the one from STD2_7!
+               this one is hardcoded in the executable.
+               apparently used to do conversions to SJIS
+               via function at 800DE16C (charToSjis?)
+    8012529F = kanji page encoding table??
+               immediately follows encoding table above...
+               but is not part of it?
+               and isn't separately referenced?
+    80125A28 = start of a bunch of static text strings...
+    801297C0 = pointer to a table of pointers for some gpu-related
+               library functions (at 80119780).
+               code always accesses through this pointer rather than
+               using the table or functions directly.
+               - +0x1C = readFromGpu?
+               - +0x24 = ??? can lead to readFromGpu?
+    801EFFB0 = player name in fixed-string ("naming screen") form
+
+** map data **
+  - maps are packed in MAP.PAK
+  - index of each map chunk's starting byte position is found in
+    MAIN.EXE, 0x8012335C (0x46 entries)
+  - maps have a static layout:
+    - sectors 0x00-0x07, 0x3800 bytes:
+        ? a pBAV file
+    - sectors 0x007-0x046, 0x23000 bytes:
+        ?
+    - sectors 0x04D-0x093, 0x23000 bytes:
+        ?
+    - sectors 0x093-0x0DB, 0x24000 bytes:
+        a pak of RUXes containing various resources
+        - includes script data (last?)
+        - in most cases, seems to be a bunch of unheadered 256x256px 4bpp graphics
+          containing area tiles, backgrounds, enemy sprites...
+        - there's other stuff in there too, not sure what it is.
+          maybe tile structure data or something
+    - sectors 0x0DB-0x0E5, 0x5000? bytes
+        - pak of (uncompressed) pQES files?
+          e.g. 2 in map 0
+          (but this number is not fixed -- map 0x11 has 3)
+
+** text formats **
+  so...
+  
+  == text box text ==
+    - for standard "script" content
+    - normally uses a variable-width encoding,
+      though some dynamically inserted content such as lulu/pom names
+      is stored as sjis and converted on the fly
+    - 801000F8 = renderBoxText?
+      - also handles "choice" box text
+    - 800FDE9C = updateStdTextBoxMsg?
+  
+  == "plain string" text ==
+    - e.g. item names and descriptions
+    - sjis, converted as required
+    - 8003C080 = print routine?
+  
+  == "name screen" text ==
+    - naming screen, loading menu, etc.
+    - 800DD7FC = renderNameScreenString?
+    - 8003C274 = renderFixedStringPom?
+      - input data is encoded as such:
+        - standard characters have the high bit set (though the game does not
+          really check this) and refer to a character by its total index
+          within the character texpage.
+          there are 21 characters per row, and 21 conceptual rows per page half
+          (though some rows at the bottom of each half are used for other things.
+          despite that, they still count toward this value.)
+          thus, there are 441 (0x1B9) indices per half.
+          characters in the left half are 8000, 8001, 8002, etc.,
+          up through 81B8.
+          characters in the right half are 81B9, 81BA, etc.,
+          up through 8371.
+          characters "あ" through "CD" are in the left half,
+          while "森" through "番" are in the right half.
+        - additionally, the one-byte sequence 0x0A triggers a line break
+          (where applicable).
+          0x07 is acknowledged and ignored
+          (presumably due to lazy text file conversion)
+      - also, there are apparently control codes:
+        - 0x0A = newline?
+      - see ~0x80016F28 for examples of strings in this format
+  
+  == area names?? ==
+    todo
+    see 80036FB0 = entry overlay
+    and 80049F78 = map
+ 
+** SLPS_008.17 **
+  - ~80A90 = rendering space for credits overlays
+  - ~12DF88 = rendering space for "gameplay" scenes?
+  - ~15515C = rendering for ?
+  - ~162D00 = rendering for ?
+  
+  - 0x8001F054 = renderCreditsOverlay
+    - 0x80010158 = string definitions (20 structs total, 40 bytes each)
+                   - each char is 2 bytes LE and specifies an index into
+                     the 16x16 graphics page contained in OP1.PAK/5
+                     - if a negative value, nothing is printined;
+                       instead, the current x-position is offset
+                       by the specified amount
+    - 0x80010478 = string palette specifiers (20 structs total, 1 byte each)
+                   - 1b palette number (0 = normal, 1 = header)
+    - 0x8001048C = string position specifiers (20 structs total, 2 bytes each)
+                   - 1b base x
+                   - 1b base y
+    - 0x800104B4 = page content specifiers (5 structs total, 2 bytes each)
+                   - 1b starting index within string definitions
+                        of first string to show
+                   - 1b number of sequential strings from definition
+                        array to show
+    - basically, all we should really have to do is put a new font in
+      OP1.PAK/5, halve codepoint size to 8-bit, and throw in a table
+      lookup for width
+
+note: there's an unused entry in the opening credits
+(not referenced by any page, probably was intended to appear with the
+final fill in cafe copyright)
+change 0x800104BB from 2 to 4 to show it with the director/scenario credit.
+content:
+制作
+紺谷昌也
+Producer
+Masaya Kon'ya
+
+0x7FC0 >> 6
+0x003F >> 0
+
+** misc **
+  - oh look, STD2:7 is a plain text file containing a SJIS "alphabet".
+    this will probably come in handy somewhere.
+    - it exactly matches the layout of the font in STD2:4 and STD2:5!
+      no need to look the kanji up by hand!
+      wow, thanks, programmer!!
+    - indeed, it seems the game contains some hardcoded text as SJIS
+      and converts it on the fly.
+      unlike SOMEBODY at sandlot.
+      - though the regular script is in fact stored in a custom encoding,
+        so it's really not all that much different
+
+PLM
+  - 1f8404 = plm load pos?
+             seems to continue up through 1FF404 or so
+             probably exactly that since it's exactly 0x7000 bytes
+             highest legit stack position looks to be 0x1FF32A or so,
+             which is pretty tight...
+  - header:
+    - 4b "PLM0"
+    - 2b code+string block start offset?
+         (offset is file-absolute, as are all other offsets in the file)
+    - 2b ? start offset?? (memory, not stored in file)
+         this is the always the size of the file content?
+         possibly file size
+    - 2b unknown, same as previous in all files
+         possibly the actual start of some piece of memory,
+         which always begins at the end of the physical file content
+         and thus is always the same as the file size field
+    - 2b ? start offset?? (memory, not stored in file)
+    - 2b ? start offset?? (memory, not stored in file)
+    - 2b initial stack offset (grows upward)
+  - 0x33 XXXX ** ** ** ** ** ** ** **
+      = display string from XXXX in text box?
+  this is one of the most needlessly cumbersome implementations of a
+  scripting system i've seen in a while...
+  basically, most text operations are based around a function stack.
+  here is the procedure the game goes through every time it needs to
+  call a "text function":
+    - push any params onto the stack in reverse order (op 33?)
+    - push the function number to the stack (op 48, which internally
+      is simply an alias for op 33)
+    - execute the stack.
+      technically, this is done simply by calling op 7F.
+      however, for whatever bizarre reason, the programmer chose to
+      have the game instead do a script call (op 79) to a script function
+      (always located at offset 0x14 in the script?) which simply
+      executes op 7F to run the stacked function, then returns (with op 7B).
+    - move the stack back to its original position.
+      this is done by explicitly adding the size of the function number and
+      parameters to it (op 7E).
+  so for example:
+    33 ED 2E    pushWordParam(0x2EED) ; offset of a string to print
+    48 00 01    pushFuncNum(0x100)    ; function 0x100 = printTextBoxString?
+    79 14 00    call(0x14)            ; contains 7F 7B = execStack() + ret()
+    7E 04       moveTextStack(0x4)    ; erase the function ID + parameters
+  so that's 11 bytes to do something that could easily have been accomplished
+  in 3, or 4 if you need 16-bit opcodes.
+  this is honestly pretty silly.
+  and this sequence is repeated for every single individual line of text!
+  not every dialogue sequence, not every dialogue box, every single newline!
+  - there are three possible sources of text box printing:
+    - 800FDE9C = updateStdTextBoxMsg
+                 handles normal message printing
+    - 800FE300 = printTextBoxNum
+                 used to print numbers (which are written to the stack
+                 in scripts and triggered for printing with command 0x107)
+    - 800FE508 = printTextBoxSubstr
+                 used for printing lulu's name, pom names, etc.
+    - each of these routines duplicates the logic for text delay, etc.
+    - in all cases, the function is repeatedly passed either a pointer to
+      the start of a string to print or a number to be printed.
+      if the function has not yet initialized itself, this is used to do so;
+      otherwise, it's ignored and the current position is used to print
+      the next character in the target
+
+~14460 = sjis item name strings
+
+11910 = fixed string: モコモコの森 area label
+          - note: 81B9 = 森, which is normally 112.
+            apparently the game does these character computations on
+            the entire texpage (the "left" side would contain 441 = 0x1B9
+            characters if it didn't use some of the space for other things)
+
+0x8012BDF0-0x801F83FC = static memory space? heap? both?
+
+~1A774+ = debug console strings, can get rid of
+          - though some of this may have legitimate use (e.g. CD001),
+            so perhaps not
+80100BE0 = tty print, can probably replace with ret and
+           reuse the rest of the space.
+           looks like it's followed by a lengthy printf implementation...
+           is this needed for anything besides debug text?
+
+- normal image format:
+  - 4b ? 0x10?
+  - 4b ? 0x8?
+  - 4b palette chunksize
+    - 2b? ?
+    - 2b? ?
+    - 2b? ?
+    - 2b? ?
+    - palette data
+  - 4b image chunksize
+    - 2b? NOT dst gpu x?
+    - 2b? NOT dst gpu y?
+    - 2b pitch?
+    - 2b height?
+
+155834
+1653e0
+165408
+
+OP1/5.bin = text resources for title
+
+; renderFixedCharPom?
+; used in pom community
+;
+; a0 = char id?
+; a1 = character X
+;      multiply by 12 and add 0x18 to get pixel x-offset from
+;      containing box
+; a2 = (y-offset / 16) - 0x11?
+; a3 = containing box x?
+; sp+0x10 = containing box y?
+; sp+0x14 = scale?
+; sp+0x18 = clut
+
+
+; renderFixedChar?
+;
+; a0 = src char x-pos within character grid
+; a1 = src char y-pos within character grid
+; a2 = texpage index:
+;      - 0 = 29
+;      - 1 = 2A
+;      - 2 = 09
+;      - 3 = 0A
+; a3 = containing box upper-left x?
+; 0x10(sp) = containing box upper-left y?
+; 0x14(sp) = x-offset from base box pos?
+; 0x18(sp) = y-offset from base box pos?
+; 0x1C(sp) = scale factor?
+;            fixed-point with 8 bits of decimal precision,
+;            i.e. 0x100 = normal scale,
+;                 0x80 = half scale,
+;                 0x200 = double scale,
+;                 etc.
+;            also affects x/y pos
+; 0x20(sp) = transparency setting?
+; 0x24(sp) = clut index?
+; 0x0A2C($gp) = dst for render cmd
+
+
+struct LineBuffer {
+  // set when allocated.
+  // cleared every iteration of game loop
+  bool isUsed
+  // value of isUsed on previous game loop iteration.
+  // when searching for a place to put new content,
+  // we insert to entries that don't have this (or isUsed) set.
+  bool wasUsedLastLoop
+
+  // set if not a "top-level" line.
+  // needed to avoid checking sub-lines for cache.
+  // (or just set srcPtr to -1?)
+  bool isSubLine
+  
+  // indices of up to 8 additional lines that follow this one
+  // (for strings with linebreaks)
+  // FF if not used.
+  // (remember that all of these need to be marked as used if
+  // this entry is cache-matched)
+  byte subLines[8]
+  int numSubLines
+  
+  // used to check whether a string we are about to draw
+  // has already been rendered, allowing us to reuse it if so.
+  // this effectively "caches" strings, to avoid redrawing them
+  // over and over every frame.
+  // (not checked for sub-entries)
+  //
+  // pointer to string that was printed here
+  int srcPtr
+  // probably the sum of all string bytes
+  // (yeah yeah, not a good hash, but combined with the previous check,
+  // probably good enough for any situation we'll actually face)
+  int srcHash
+  
+  // pixel width of current line content
+  int width
+  
+  // vram position of buffer
+  // (probably not needed, just the buffer's index number?)
+  int bufferVramPos
+  
+  // index number of this buffer
+  // needed?
+  int slotNum
+};
+
+struct LastLineBufferFoundReport {
+  LineBuffer* mainTarget
+};
+
+- irritatingly, we cannot entirely escape doing manual VWF composition:
+  we're working with 4bpp graphics, but can only write to the GPU with byte
+  granularity.
+  so when writing to an odd x-pos, we have to remember the rightmost nybble
+  of the previous character and OR it with the leftmost byte of the new char
+  (also right-shifting the new char by 4 bits) before sending to GPU.
+  at minimum, we'll need one such "nybble buffer" for the text box
+  (which may be written across multiple frames) and one more for
+  everything else (which should always be processed within one frame)
+
+
+mednafen scale values:
+  x = 0.875 (1.75, 2.625)
+  y = 1.0 (2.0, 3.0)
+for credits:
+  x = 320 / 292 = 1.095 (2.191, 3.287)
+
+// pick out only translated cells
+=IF(F1=I1, "", IF(ISBLANK(H1),"",F1))
+// invert the result of the above to get only untranslated cells
+=IF(J1="",IF(H1="","",F1),"")
+
+DONE
+  - sjis overwrite strings (initial names, etc.) need to be implemented
+  - hook up number printing routine, etc., to proper locations
+  - fix code at 8003B6D0 to print lulu's name correctly
+    (what's this used for?)
+  - lulu face prompt indicator continuing to appear even after dismissing prompt
+    on item menu? (this is a bug in the original game)
+
+TODO
+  - code called after naming a pom needs to be adjusted to remove the
+    sjis conversion, as with lulu's name.
+    see other calls to runNamingScreen at 8001C364 and 8001C5C4,
+    and their use of 801709D4 = kanji conversion doc
+  - space permitting, the character widths should be moved to a table
+    in memory.
+    the current gpu readbacks are fine for regular printing where that
+    has to happen anyway, but it's a needless bottleneck for routines
+    that are simply trying to determine a string's width.
+    as it is, we're getting a frame of lag when fast-forwarding
+    sufficiently large amounts of text at once.
+    not sure if eliminating the readbacks for the dynamic line wrapping
+    check would be enough to mitigate that.
+    - if we end up with lots of free space, it would be even better to
+      store all single-color characters in memory as 1bpp and only
+      put the big multi-colored characters in VRAM
+  - make sure the game hasn't slipped in any lulu name print commands
+    that weren't subsumed into a string
+  - fix printSjisString (8003C080)
+    - and all uses of it outside the pause menu render routine
+  - it might be good to have the text buffer search routine allocate from the
+    normally-reserved text box buffers as a last resort (if the game is trying
+    to render that much content at once, the text box should not be open
+    anyway)
+    - would also necessitate making sure those buffers' used/usedLastFrame
+      flags are updated along with the rest
+  ; TODO: ensure anything that calls printSjisString outside of
+  ;       renderMenuBoxMsg is redirected elsewhere, as this function
+  ;       now sends content to menuBoxDisplayQueue for future evaluation
+  ;       instead of actually rendering it
+  ;       (there are a grand total of 4 calls to printSjisString outside
+  ;       of renderMenuBoxMsg, which is why i did it this way)
+  - can pom names be 12 characters + terminator, or is the length limit
+    too hardcoded?
+  - find some aesthetically pleasing way to fit rank onto pom community
+    summary screen
+  - absolute pixel length limits on names:
+    - let's go with 160px for community name?
+      mostly because that's what can comfortably fit on the summary screen
+    - as for lulu and the poms, dunno.
+      doesn't really matter with dynamic word wrap except that really REALLY
+      long names might cause the top line of some long messages to get
+      scrolled off-screen before pausing.
+      which honestly, if you're deliberately naming your characters
+      "mmmmmmmmmmmm", you probably deserve.
+    - okay, implemented, now do something to make sure everything on the
+      naming screen stays in the box for long names...
+  - figure out how to handle pom ability name display when chatting in
+    community (depends mostly on how long the translations are)
+  - center characters on naming screen character picker
+  - move down lulu "more text" indicator on main text box to avoid covering
+    lowest line
+  - center community name on status screen?
+  - fix resist item use messages in community
+  - are these weird "report" messages actually used somehow?
+    - okay, this can be forced to happen by going to the community
+      and setting 0x801260E0 to 0x13.
+      but the actual report display is garbled, and it erases
+      all the community buildings.
+      is this an invalid method of accessing it?
+      or is it not used at all and this is all just leftovers?
+      - function 0x800EF370 sets 0x801260E0 to 0x13
+        ...this doesn't seem to be referenced anywhere
+  - need to do something about ", is it?" confirmation prompt on naming
+    screen, which overflows the box for long community names.
+    laziest option is to just turn it into a question mark.
+    higher-effort options are to shift the name display left,
+    or add the necessary extra strings to more closely match
+    the original formatting of the messages.
+  - does having names end in a space or spaces horribly break anything?
+  - maps with graphic resources requiring translation
+    (usually minigame stuff)
+    - map 5, res 9
+      - palette offsets in res 0:
+        - clear/miss/hit = 0x294? 0x4D4?
+        - labels = 0x454?
+    - map 21, res 9 (mining)
+      - palette offsets in res 0:
+        - labels = 0x474?
+  - add [nbsp] for emotes
+  - is blinking cursor on naming screen cache-safe?
+    affects hash of name as it's being drawn
+  - add support for auto-breaking dashes as well as hyphens
+  - check for ascii quotes in translation
+    - and maybe turn off unknown character skipping entirely at the end
+  - make sure ellipsis spacing is consistent
+  - check for \p before terminating center tags
+  - map 48, probably others: ギィー enemy
+  - auto-check for box overflow
+  - make sure ellipsis spacing is consistent
+  - proper dumb american conventions for quote-punctuation interactions
+  - earrings plurality if i care enough
+  - does original game screw up poison/fainting cure price at churches
+    when the amount is divisible by 100?
+    i know the shops have some sort of weird script-based workaround
+    for this, but there's no sign of it for churches, and it would
+    have been easy to miss during testing due to churches being
+    virtually useless
+    - yes, it does screw them up.
+      well, the hell if i'm blowing several hours tediously fixing an
+      original-game bug no one will ever notice because you're drowning
+      in money by the time this ever becomes an issue.
+    - another original-game bug: choosing an action at a prompt
+      while holding the fast-forward button skips the immediately
+      following box of text
+  - SUBSTITUTE MYO
+
+~800EA2A0 or 800EA338
+
+title font creation process:
+  - create string (dcc scisor 18pt)
+  - create shadow
+  - manually recolor characters as needed
+    - ...wait, i can just set the colors in the text editor...
+  - apply gradient
+  - create merge of shadow + text + gradient, and threshold alpha
+  - select original text alpha, invert, sharpen, and cut to remove outer shadow
+  - export, then remap against inner colors map:
+    convert "rsrc/grp/title_menu.png" -dither None -remap "rsrc/grp/title_start_inner_remap.png" PNG32:"rsrc/grp/title_menu_inner_remap_output.png"
+  - import the remapped version into the image and clean as needed
+  - export, then add an outline:
+    ./outline.sh "rsrc/grp/title_menu.png" "test.png"
+  - import result
+  - manually assign dark colors for each letter's outline
+  - do final cleaning
+simple as that!!
+
+
+      ; 美術監督
+      .stringn "Art Director"
+      ; 美術
+      .stringn "Art"
+      ; 美術監督
+      .stringn "Art Director"
+      ; 美術
+      .stringn "Art"
+      ; 音楽
+      .stringn "Music"
+      ; 音楽
+      .stringn "Sound"
+      ; 監督・脚本
+      .stringn "Direction & Scenario"
+      ; 制作・著作
+      .stringn "Produced by & Copyright"
+
+113A0 = "do you want to save over"
+118AC = "NO DATA"
+
+0x163364
+
+shuugou:
+form up
+assemble -- too formal?
+to me
+c'mere
+
+kaisan:
+break -- too confusing
+disperse -- too formal?
+split up
+scatter
+
+azazzian
+
+wandroff
+mallit/banget
+ascley/surjei (asclie/surgie?)
+presper/vesbyr
+
+mew, myew, miew
+
+worst-case on pom ability names:
+  - box is 200px wide
+  - pom name length is capped at 92px
+  - open/close backets are 7px each, total of 14px together
+  - slash between name/ability is 7px
+  - so together, the base required width is 92 + 14 + 7 = 113px
+  - longest ability name is currently "Straycheetong" at 97px.
+    so for a max-length pom name, we're at 210px, i.e. 10px over the limit.
+    maybe change it to "Straychitong" or "Straychtong"?
+    or "taffytong" or something, i dunno
+
+streichytong
+
+<abc def> <ghi jkl>
+< (0) = "dummy": 0
+> (0) = "dummy": 0
+< (1) = 0.500 / 0px / byte 2
+> (1) = 2.000 / 56px / byte 11
+  - at time = 1.000, calculate:
+    total timespan = (2.000 - 0.500) = 1.500
+    offset within span = (1.000 - 0.500) = 0.500
+    completion percentage = (current / total) = (0.500 / 1.500) = 0.333
+    pixel span = 56px - 0px = 56px
+    pixel gradation end = pixelBase + (pixelSpan * completionRate)
+                        = 0px + (56px * 0.333)
+                        = approx. 18.648px
+                        = what we're calling 18px
+    pixel gradation start = gradEnd - 6px = 12px
+    - compute 3 line segments for each character:
+      - left of gradation
+      - intersection of self/gradation
+        - also noting starting offset within graded area
+      - right of gradation
+    - "a": startX = 0px, endX = 8px
+      rightSideOverlap = (endX - gradStart) = (8px - 12px) = -4px
+                       = no right overlap
+    - "b": startX = 8px, endX = 16px
+      rightSideOverlap = (endX - gradStart) = (16px - 12px) = 4px
+                       = 4px of right overlap
+    - "c": startX = 16px, endX = 24px
+      rightSideOverlap = (endX - gradStart) = (24px - 12px) = 12px
+                       = 
+  - continue evaluating gradation at same rate as between s1/f1,
+    but hard cap coloration at characters before s2
+    - track byte positions of each point so we know when we're
+      in a particular range?
+< (2) = 3.000 / 64px / byte 14
+> (2) = 5.000 / 120px / byte 23
+  - continue gradation indefinitely
+
+ending gp = 8002AE28
+  +0x200 = 0x8002B028 = current display struct pointer
+           add 0x70 to get start of display linked list
+           - most stuff seems to link to (structStart+0x26C)
+display structs:
+  display struct buffer A = 80069E68
+  display struct buffer B = 80080B58
+  0x16CF0 bytes each
+
+咲いてた花さえも
+枯れてゆく少しずつ
+綺麗な命は
+せつなくはかなく
+
+全てが嘘だから
+２度目はありえない
+哀しいことでも
+夢でもかなわない
+
+オイルには憂鬱を混ぜて
+精密な機械のように
+最期まで続いてしまう
+現実のボタンをとめて
+
+透明な水のなか
+移りすんだ魚たち
+見えすぎる現実に
+嘆いて目をふせる
+
+
+
+saiteta hana sae mo
+karete yuku sukoshi zutsu
+kirei na inochi wa
+setsunaku hakanaku
+
+subete ga uso dakara
+nidome wa arienai
+kanashii koto de mo
+yume de mo kanawanai
+
+oiru ni wa yuuutsu o mazete
+seimitsu na kikai no you ni
+saigo made tsudzuite shimau
+genjitsu no botan o tomete
+
+toumei na mizu no naka
+utsurisunda sakana tachi
+miesugiru genjitsu ni
+nageite me o fuseru
+
+
+
+Even the flowers that were in bloom
+are withering away, little by little.
+The more life is beautiful,
+the more it is painfully short.
+
+Everything is a lie;
+you never get a second chance.
+As sad as it is,
+dreams never come true.
+
+We live like machines,
+fueled by depression,
+forced to live forever,
+until we press the "End" button.
+
+The fishes that have moved
+to crystal clear, transparent water
+turn their eyes away
+to avoid facing this harsh reality.
+
+
+127C
+
+55 56 57
+37 = moon town
+38 = moon town interior
+39 = castle exterior
+
+
+0x18E4 = start of card 41 script
+- call to this is at 0x27A9
+  - which is referenced at 0x2858
+    - part of an op 78 switch command, linked to script ID 0x12
+    - list starts at 0x2812
+    - 0x78 op itself is at 0x2740
+- target script "id" comes from 0x801FDB48? via op 01?
+  - this is set at 0x800FB068
+    - part of 0x800FAFB4, called when starting a clickpoint script?
+      a0 = script id?
+      - called at 0x80022690
+        - this leads us to a series of 0x54-byte structs based at
+          0x8013E8D4 identifying active "objects"?
+          +0x50 = clickscript ID?
+          - regular drawer interaction = 0x8013EE68?
+- the long and short of it is that this comes from one of the map subchunks
+  i never bothered with.
+  oh, and trading card 41 is actually unobtainable in the 1997 release!!
+  jesus, guys, i know you had a bad time developing this but come on!
+  ...guess this explains why the strategy guide listed its location as "<???>"
+- the target file with the map object assignments is at 0x213DAE6
+  in MAP.PAK.
+  - target map ID is 0x37
+  - the RUX overall begins at 0x213D800
+    - this map starts at 0x204E800 (next is 0x20C8000, nextnext is 0x215D800)
+      - so offset = 0x75800
+- after accounting for the card i legitimately missed in my playthrough,
+  i still somehow came up with a total of 42 cards despite this bug.
+  most likely this means that one of the other card collection events
+  is bugged and gives you two cards instead of just one, allowing this
+  bug to slip through testing (they probably just checked that they had
+  enough cards to buy everything at the trade shop and assumed everything
+  was fine since they did).
+  well, time to check every single card event!!
+  minigames:
+    - casino ok
+    - moom ok
+    - checked:
+      ...
+  ok, got it! only had to go down half the damn list!
+  card 22, "Water Spirit", in the haunted mansion party room (id 0xBF),
+  is bugged.
+  collecting it gives you 2 cards instead of 1.
+  and fixed!!
+  that was really dumb!
+  - note: they added card 41 in for the rerelease, but card 22 is still bugged
+    and awards itself twice!
+    so unless they also managed to screw something *else* up to even
+    out the total, it's possible to get 43 cards in your inventory
+    in that version.
+
+plural items:
+  - lunagic shoes (ID 0x4D)
+  - magic earrings (ID 0x8C)
+
+nora/stray        - wando
+
+murmo/shepherd    - lambo
+mirmo/farmer      - hoebo, tracto, hambo, conro
+
+gorda/warrior     - robbard, vikul, vikey, vike, thorsun
+barda/adventurer  - archey, haerysun, fordsun
+
+ninny/standard-   - neeno
+       bearer
+sulury/ninja      - sheeno
+
+tonka/carpenter   - mallit, sledginald, sledggie, sledgeric, sledgewick
+ganga/builder     - mallie, jakkie
+
+kuliry/nurse      - ascley
+goliry/doctor     - surgey, medichee
+
+pashala/nun       - ester
+pashalu/reverend  - vesper
+
+matra/blue pom    - 
+mikeno/yellow pom - 
+butila/red pom    - 
+
+
+norano/layabout   - 
+
+tonka/carpenter   - 
+ganga/builder     - 
+
+murmo/shepherd    - 
+mirmo/farmer      - 
+
+kuliry/nurse      - 
+goliry/doctor     - 
+
+gorda/warrior     - 
+barda/adventurer  - 
+
+sulury/ninja      - 
+ninny/standard-   - 
+       bearer
+
+pashala/nun       - 
+pashalu/reverend  - 
+
+matra/blue pom    - 
+mikeno/yellow pom - 
+butila/red pom    - 
+
+
+
+nora/stray        - wando (wanda + wander)
+
+tonka/carpenter   - slegeric (cedric + sledgehammer)
+ganga/builder     - ribbrick (riddick + brick)
+
+murmo/shepherd    - lambo (shepherd, duh)
+mirmo/farmer      - conro (sounds like "corn row" if you live in the American South)
+
+kuliry/nurse      - ascley (ashley + asclepius)
+goliry/doctor     - medichee (medici + medic)
+
+gorda/warrior     - thorsun (thorson + viking theme)
+barda/adventurer  - fordsun (from "harrison ford";
+                    could be "haerysun" or the like if that's more obvious/funny)
+
+sulury/ninja      - sheeno (from "shinobi")
+ninny/samurai     - neeno (because i have no idea what to do with this one)
+
+pashala/nun       - ester (from "esther". that's a bible name, right?)
+pashalu/reverend  - vesper (lester + vespers)
+
+matra/blue pom    - keep japanese names for these?
+mikeno/yellow pom - 
+butila/red pom    - 
+
+
+
+
+
+
+norano/layabout   - laya
+
+tonka/carpenter   - hamma
+ganga/builder     - neyl
+
+murmo/shepherd    - peep
+mirmo/farmer      - mcdawn
+
+kuliry/nurse      - arren
+goliry/doctor     - emdee
+
+gorda/warrior     - bulh
+barda/adventurer  - wheep
+
+sulury/ninja      - shuri
+ninny/samurai     - ken
+
+pashala/nun       - rosa
+pashalu/reverend  - rio
+
+matra/blue pom    - blau
+mikeno/yellow pom - giallo
+butila/red pom    - rouge
+
+
+norano/layabout   - laya
+
+tonka/carpenter   - hammo
+ganga/builder     - naila
+
+murmo/shepherd    - lambo
+mirmo/farmer      - tracta
+
+kuliry/nurse      - banda
+goliry/doctor     - stetho
+
+gorda/warrior     - axx
+barda/adventurer  - 
+
+sulury/ninja      - shuri
+ninny/samurai     - ken
+
+pashala/nun       - habitt
+pashalu/reverend  - biblo
+
+matra/blue pom    - toise
+mikeno/yellow pom - chu
+butila/red pom    - zard
+
+
+
+
+
+norano/layabout   - laya
+
+tonka/carpenter   - hamma
+ganga/builder     - naila
+
+murmo/shepherd    - peep
+mirmo/farmer      - mcdawn
+
+kuliry/nurse      - arren
+goliry/doctor     - emdee
+
+gorda/warrior     - buhl
+barda/adventurer  - wheep
+
+sulury/ninja      - shuri
+ninny/samurai     - ken
+
+pashala/nun       - rosa
+pashalu/reverend  - rio
+
+matra/blue pom    - blau
+mikeno/yellow pom - giallo
+butila/red pom    - rouge
+
+
+
+21218
+212A0
+21FB0
+2218C
+
+21218
+212A0 (sometimes)
+
+- 8012C1E0 = movement disabled flag (rerelease: 8012A670)
+  see 80021F98
+  - set at 0x80023E28, then 0x8007201C when red hourglass used
+    - unset at 0x8006CEAC
+- 8012C078 = disaster timer? counts up
+
+states of poms in community ~0x801F59E0 (adventurerer?)
+- norano starts at 0x801F57CC?
+  1F57F8 = remaining actions? (e.g. farm rows to sow)
+  1F57FA = remaining subactions? (e.g. farm squares to sow)
+  +0x60 = 1F582C = target walk x??
+    - written at e.g. 800F6040 when farming?
+  +0x64 = 1F5830 = target walk y??
+  +0x6C = 1F5838 = pointer to building this pom is attached to?
+0x80154CFC = target cell x-coord for farm pom?
+0x80154D00 = target cell y-coord for farm pom?
+0x800F5D5C = function that determines pom actions??
+0x801F5398 = pointer to state struct of pom currently working field?
+  - this is possibly 0x1A in some struct?
+    or 0x1C? shouldn't it be word-aligned??
+0x801F537C = farm state struct? 0x20 bytes?
+             part of a series of structs identifying community buildings?
+             byte 0 = building id? 00 = farm?
+             byte 2 = building level? 0 = doesn't exist?
+             byte 28 = 0x801F5398 = pointer to pom attached to building?
+- the bug seems to occur when the game somehow clears
+  +0x6C (pom's pointer to attached building) in the pom's state struct
+  without also clearing 0x801F5398 (field's pointer to attached pom),
+  which makes the game think a pom is in the field when it isn't.
+  this prevents farming actions from being initiated, since the game
+  doesn't allow them if the field's pom pointer is nonzero.
+  so what could cause that?
+  - it can probably be remedied by verifying that the
+    pom registered with the field actually has an attached building
+    pointer, and that its id (+0) is 0 (field), when checking whether to
+    allow a pom to start farming.
+    however, i'd like to know the root cause here...
+    ...well, whatever
+
+shop price display logic ("correct" version):
+  // "price" consists of two bytes:
+  // - low byte "priceLo", which is the ones and tens place of the value
+  //   (490 -> 90)
+  // - high byte "priceHi", which is the hundreds place of the value
+  //   (490 -> 4)
+  
+  if (priceHi == 0x00)
+    goto printPriceLo
+  
+  print(priceHi)
+  
+  if (priceLo != 0x00)
+    goto printPriceLo
+    
+  print("0")
+  
+  printPriceLo:
+  print(priceLo)
+  
+  ^--- seriously, who the FUCK wrote this?? what were they thinking???
+       the game has a fully functional script op for printing arbitrary
+       numbers! would it have been THAT hard to read a 16-bit value
+       and put it on the text stack for printing instead of this lunacy?
+       oh, and the best part: thanks to this incredibly cumbersome system,
+       they screwed up this logic for about half the messages in the game.
+       those don't have the check for (priceLo != 0x00) or the extra zero
+       print, and as a result will not display the tens digit if
+       the value is >= 100 and the tens digit is zero.
+       
+community disaster submap id = 0x215? (last map in the game)
+
+8001F2E0 = runs every frame of normal gameplay?
+           looks like this is drawing "high-priority" overworld graphics
+           that appear in front of npcs, such as doorways, pillars, etc.
+           - writes display struct?+0x5AF0 with ???
+80020390 = display struct init?? runs twice when map entered
+           - writes +0x5AF0? probably with expected structs?
+i don't know... what i can tell you is that something overwrite the memory
+at displayStruct+0x5AF0 with something, possibly texpage commands? 16x16 rects??
+destroying the intended sequence of 0x2C rendering commands that
+functions assume to exist.
+but i have no idea how such a thing would happen...
+it certainly *could* be my code, but i'm pretty sure i've never touched
+that area, and i don't know how i could have so precisely ended up
+targeting the exact start of this area without actually trying.
+i'd like to think it's the result of some obscure issue with the
+high-priority overworld layer code, but that seems overoptimistic...
+...wait, i suppose the real question here is "why the hell is the map
+drawing itself at a completely different position from normal?"
+surely the map must be drawing itself wrong...
+base = 0x1550EC
+ovr = ~0x15ABDC
+diff = ~0x5AF0
+okay, so the map is overflowing its assigned display struct space,
+which is +0x2418 through +0x5AF0? 0x15F entries?
+- 0x80171174 holds the map layout when on the map screen?
+  and is a buffer occupied by e.g. dynamic sprites otherwise?
+  - 0x801711B4 is written when we bring the map up;
+    the debugger insists no write is occurring
+    so i guess it's just fucking magic.
+    okay, maybe it's some gpu read that goes undetected?
+    indeed it is, probably.
+    so is the map layout being stored in gpu to save memory?
+    and something corrupted that?
+    i could believe it.
+- the data in question starts at e.g. GPU 0x84D00
+  see 0x800459DC for the readbacks
+  - this is written in doMapInit
+    - the initial write is done at 80039D64
+- area 0x3D/61? = MAP.PAK 0x2343800
+  target rux = 0x23AAF8B = +0x6778B = +~0xCE sectors
+  which is the last resource subchunk
+  - we're not recompressing these so idk
+13f908
+  - 13fda8
+regular castle is area 0x3D (61), but boss rematches are 0x3F (63).
+any difference in the dungeon map data?
+...yes, yes there is.
+could it be by any chance that they updated the maps for the
+regular castle but forgot to do it for the boss rooms?
+let's swap them out and see.
+copy area 61 data to areas 63-66
+- well, that works fine *except* that it breaks the "you are here" indicator
+  while in that room.
+  what controls that?
+  - ah, each floor has three separate chunks, the first of which
+    assigns submap IDs to each region so the game knows which room
+    corresponds to which submap.
+    all we have to do is switch out the "boss defeated" submap id
+    for the "boss not defeated" submap id.
+    these are as follows:
+    - map 63 (sandworm) 1F: 0x1DD -> 0x20F
+    - map 64 (plant) 1F: 0x1E1 -> 0x210
+    - map 65 (cat) 2F: 0x1EB -> 0x211
+    - map 66 (totem) 2F: 0x1EF -> 0x212
+okay, fixed, i hope.
+my best guess at what happened here:
+originally, they were just using a simple array of "this tile belongs to
+this submap" to assign room IDs. similarly, one occupied map tile = one output
+rendering command.
+but once they got to the bigger and more complicated maps like castle vajra,
+this started taking up too many rendering commands, causing them to
+overflow the intended area (and they were unable/unwilling to simply allocate
+more slots for this purpose). so they made a special shortcut for
+rendering room interiors to reduce the number of commands required.
+the main castle vajra maps were updated to use this new format, but
+the duplicates for the boss rooms were not, so if the game has to render
+the whole minimap there (i.e. the player picked up the map), then it will
+overflow its assigned space and cause the corruption.
+

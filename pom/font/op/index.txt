@@ -1,0 +1,16 @@
+[Properties]
+numChars=256
+charsPerRow=16
+gridW=16
+gridH=16
+#noKerning=1
+autoKerningOffset=-2
+#autoWidthOffset=-2
+
+# space
+
+[char0000]
+noKerningIfFirst=1
+noKerningIfSecond=1
+advanceWidth=6
+

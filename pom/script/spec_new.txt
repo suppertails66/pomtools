@@ -1,0 +1,88 @@
+//===================================
+// NEW: Ranks for Pom Community
+//===================================
+
+#STARTSTRING("new_0x0", 0x0, 0xFFFFFFFF)
+#IMPORT("new_0x0")
+#ENDSTRING()
+
+#STARTSTRING("new_0x1", 0x1, 0xFFFFFFFF)
+#IMPORT("new_0x1")
+#ENDSTRING()
+
+#STARTSTRING("new_0x2", 0x2, 0xFFFFFFFF)
+#IMPORT("new_0x2")
+#ENDSTRING()
+
+//===================================
+// NEW: pluralizing suffix for trading cards
+//===================================
+
+#STARTSTRING("new_0x3", 0x3, 0xFFFFFFFF)
+#IMPORT("new_0x3")
+#ENDSTRING()
+
+//===================================
+// NEW: game over message
+//===================================
+
+#STARTSTRING("new_0x4", 0x4, 0xFFFFFFFF)
+#IMPORT("new_0x4")
+#ENDSTRING()
+
+//===================================
+// NEW: extra name screen strings
+//===================================
+
+#STARTSTRING("new_0x5", 0x5, 0xFFFFFFFF)
+#IMPORT("new_0x5")
+#ENDSTRING()
+
+#STARTSTRING("new_0x6", 0x6, 0xFFFFFFFF)
+#IMPORT("new_0x6")
+#ENDSTRING()
+
+#STARTSTRING("new_0x7", 0x7, 0xFFFFFFFF)
+#IMPORT("new_0x7")
+#ENDSTRING()
+
+//===================================
+// NEW: name screen confirmation concat strings
+//===================================
+
+#STARTSTRING("new_0x8", 0x8, 0xFFFFFFFF)
+#IMPORT("new_0x8")
+#ENDSTRING()
+
+#STARTSTRING("new_0x9", 0x9, 0xFFFFFFFF)
+#IMPORT("new_0x9")
+#ENDSTRING()
+
+#STARTSTRING("new_0xA", 0xA, 0xFFFFFFFF)
+#IMPORT("new_0xA")
+#ENDSTRING()
+
+//===================================
+// NEW: inventory plural messages
+//===================================
+
+#STARTSTRING("new_0xB", 0xB, 0xFFFFFFFF)
+#IMPORT("new_0xB")
+#ENDSTRING()
+
+#STARTSTRING("new_0xC", 0xC, 0xFFFFFFFF)
+#IMPORT("new_0xC")
+#ENDSTRING()
+
+#STARTSTRING("new_0xD", 0xD, 0xFFFFFFFF)
+#IMPORT("new_0xD")
+#ENDSTRING()
+
+#STARTSTRING("new_0xE", 0xE, 0xFFFFFFFF)
+#IMPORT("new_0xE")
+#ENDSTRING()
+
+#STARTSTRING("new_0xF", 0xF, 0xFFFFFFFF)
+#IMPORT("new_0xF")
+#ENDSTRING()
+
