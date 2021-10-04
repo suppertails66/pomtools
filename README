@@ -1,0 +1,111 @@
+********************************************************************************
+*                                Community Pom                                 *
+*                     English Translation Patch Materials                      *
+********************************************************************************
+
+This package contains the source materials (code/art/script) for the English 
+translation project for the PlayStation game Community Pom.
+
+                    ****************************************
+                    *          Build Instructions          *
+                    ****************************************
+                    
+The build system is only set up for Unix-like systems, though none of the code 
+is fundamentally dependent on this except a few filesystem functions used in the 
+"discaster" disc builder tool, which currently only have POSIX implementations 
+because I haven't built anything for Windows in years. In any case, if you 
+really wanted to run this on Windows, you could do it with minor changes to the 
+code and probably many changes to the build script.
+
+You'll need GCC, libpng, ImageMagick (i.e. the "convert" utility), and any 
+dependencies of armips.
+
+You'll first need a disc image of Community Pom for the PlayStation. This patch 
+is based on the original 1997 release of the game by Fill in Cafe, not the 1999 
+rerelease by Family Soft, and you will need that version -- the 1999 version was 
+recompiled and is incompatible with this hack. Check the startup logo and 
+copyright date on the title screen to make sure you have the 1997 version.
+
+The Redump-verified image is highly suggested, though other images may work if 
+they're a close enough match.
+
+  Redump name: Community Pom
+  CRC32:       2e95fd97
+  MD5:         27ff34f19917b0457fbc3b8eb187c89b
+  SHA-1:       ab87251a599dfc1e0ca00eabc20aced7bd404f50
+
+See http://redump.org/disc/37560/ for details.
+
+First, you need to extract the data from the disc and put it where the build 
+system expects to find it. Start by creating the following directories like so:
+
+$ mkdir -p pom/disc/base
+$ mkdir -p pom/disc/cdda
+$ mkdir -p pom/disc/files
+$ mkdir -p pom/disc/rawfiles
+
+Now extract the filesystem from track 1 of the disc image. I suggest using the 
+psximager tool "psxrip" (https://github.com/cebix/psximager) for this. I've had 
+problems with psxrip not correctly extracting the non-XA files, so you may also 
+just want to use something like bchunk to extract the ISO and then run it 
+through 7zip to get the standard files.
+
+  - Extract all the non-XA files from the disc in standard 0x800-byte-per-sector 
+format and place them in the "pom/disc/files" directory, preserving the 
+directory structure -- basically, just copy-paste the filesystem you extracted 
+above. You should end up with 4 directories and 5 files in "pom/disc/files".
+
+  - There are three XA files located in the "CD" directory of the disc: 
+"POMVOICE.", "POM_SEXA.", and "POM_BGM." (note that all of these include a dot 
+at the end of their name but have no extension). Extract those files from the 
+disc in raw-sector format, i.e. all 0x930 bytes per sector, and place them in 
+the "pom/disc/rawfiles" directory. Do not include the "CD" directory itself; you 
+should end up with 3 files and no directories in "pom/disc/rawfiles". Make 
+absolutely sure that all 0x930 bytes per sector are present, because some 
+extraction programs will strip parts of this data by default. You may need to 
+change the extraction settings to achieve this.
+  
+  - Convert CD tracks 2-5, which are audio tracks, to individual files in raw 
+binary format. Pregaps should be included in the data (i.e. each file should 
+begin with 150 null sectors). Rename the tracks to "pom_02.bin", "pom_03.bin", 
+and so on up through "pom_05.bin". Place them in the "pom/disc/cdda" directory.
+  
+  - Finally, extract the system area (the first 16 sectors of track 1) from the 
+disc in raw-sector format, i.e. all 0x930 bytes per sector; the resultant file 
+should be 0x9300 bytes in size. Name it "sysarea_raw.bin" and place it in 
+"pom/disc/base".
+
+With that done, all you should have to do is:
+
+$ cd pom
+$ ./build.sh
+
+build.sh should then build all the necessary tools and output the built disc 
+image in BIN+CUE format as "pom_build.bin" and "pom_build.cue".
+
+If you want to modify the project, check build.sh to see where the resources 
+that get inserted into the game are coming from.
+
+Note that translated game text is taken from "pom/script/pom_script.csv", a raw 
+CSV file. While this can be edited directly, it will probably be easier to 
+instead work with "pom/script/pom_script.ods", a formatted ODS spreadsheet 
+version of the same content. Just run "convertscript.sh" before "build.sh" to 
+convert the ODS into the CSV automatically (requires OpenOffice).
+
+                    ****************************************
+                    *              Licensing               *
+                    ****************************************
+
+See COPYING. Basically, everything by me (Supper) is GPLv3, and everything else
+is under the terms of whoever wrote it.
+
+                    ****************************************
+                    *               Credits                *
+                    ****************************************
+
+                               Supper -- Hacking
+                        TheMajinZenki -- Translation
+                               cccmar -- Editing and Testing
+                              Xanathis -- Guidebook Scans, Testing
+                                          and PR Coach
+
