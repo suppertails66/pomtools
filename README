@@ -66,9 +66,10 @@ extraction programs will strip parts of this data by default. You may need to
 change the extraction settings to achieve this.
   
   - Convert CD tracks 2-5, which are audio tracks, to individual files in raw 
-binary format. Pregaps should be included in the data (i.e. each file should 
-begin with 150 null sectors). Rename the tracks to "pom_02.bin", "pom_03.bin", 
-and so on up through "pom_05.bin". Place them in the "pom/disc/cdda" directory.
+binary format. Pregaps should NOT be included in the data -- if working from a 
+standard split-track Redump image, remove the 150 null sectors at the start of 
+those tracks. Rename the tracks to "pom_02.bin", "pom_03.bin", and so on up 
+through "pom_05.bin". Place them in the "pom/disc/cdda" directory.
   
   - Finally, extract the system area (the first 16 sectors of track 1) from the 
 disc in raw-sector format, i.e. all 0x930 bytes per sector; the resultant file 
